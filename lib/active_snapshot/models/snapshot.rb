@@ -74,7 +74,7 @@ module ActiveSnapshot
           ### We do this first in case you later decide to validate children in ItemSnapshot#restore_item! method
           existing_snapshot_children.each do |child_group_name, h|
             # delete_method = h[:delete_method] || ->(child_record){ child_record.destroy! }
-            delete_method = ->(child_record){ child_record.delete! }
+            delete_method = ->(child_record){ child_record.delete }
 
             h[:records].each do |child_record|
               child_record_id = child_record.send(child_record.class.send(:primary_key))
