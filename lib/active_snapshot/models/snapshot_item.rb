@@ -46,15 +46,19 @@ module ActiveSnapshot
     def restore_item!
       ### Add any custom logic here
 
-      if !item
-        item_klass = item_type.constantize
 
-        self.item = item_klass.new
-      end
+      # if !item
+      #   item_klass = item_type.constantize
 
-      item.assign_attributes(object)
+      #   self.item = item_klass.new
+      # end
 
-      item.save!(validate: false, touch: false)
+      # item.assign_attributes(object)
+
+      # item.save!(validate: false, touch: false)
+      item_klass = item_type.constantize
+
+      item_klass.upsert(object)
     end
 
   end
