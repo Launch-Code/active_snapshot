@@ -94,6 +94,10 @@ module ActiveSnapshot
         end
       end
 
+      if item_type == 'Applicant'
+        Applicant.find(item_id).save!
+      end
+
       return true
     end
 
