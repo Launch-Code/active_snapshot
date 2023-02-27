@@ -73,7 +73,7 @@ module ActiveSnapshot
           ### Destroy or Detach Items not included in this Snapshot's Items
           ### We do this first in case you later decide to validate children in ItemSnapshot#restore_item! method
           existing_snapshot_children.each do |child_group_name, h|
-            # delete_method = h[:delete_method] || ->(child_record){ child_record.destroy! }
+            # delete bypasses callbacks
             delete_method = ->(child_record){ child_record.delete }
 
             h[:records].each do |child_record|
@@ -94,6 +94,7 @@ module ActiveSnapshot
         end
       end
 
+      # triggers Elasticsearch index update
       if item_type == 'Applicant'
         Applicant.find(item_id).save!
       end

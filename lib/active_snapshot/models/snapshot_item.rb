@@ -44,20 +44,8 @@ module ActiveSnapshot
     end
 
     def restore_item!
-      ### Add any custom logic here
-
-
-      # if !item
-      #   item_klass = item_type.constantize
-
-      #   self.item = item_klass.new
-      # end
-
-      # item.assign_attributes(object)
-
-      # item.save!(validate: false, touch: false)
       item_klass = item_type.constantize
-
+      # upsert creates a record if one doesn't already exist, or updates the exisitng record if it does.  Bypasses callbacks/validations
       item_klass.upsert(object)
     end
 
