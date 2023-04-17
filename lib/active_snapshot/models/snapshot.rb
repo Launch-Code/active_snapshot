@@ -46,7 +46,7 @@ module ActiveSnapshot
     end
 
     def build_snapshot_item(instance, child_group_name: nil)
-      if instance
+      if instance.present?
         return self.snapshot_items.new({
           object: instance.attributes,
           item_id: instance.id,
@@ -79,12 +79,14 @@ module ActiveSnapshot
             delete_method = ->(child_record){ child_record.delete }
 
             h[:records].each do |child_record|
-              child_record_id = child_record.send(child_record.class.send(:primary_key))
+              if child_record.present?
+                child_record_id = child_record.send(child_record.class.send(:primary_key))
 
-              key = "#{child_record.class.name} #{child_record_id}"
+                key = "#{child_record.class.name} #{child_record_id}"
 
-              if children_to_keep.exclude?(key)
-                delete_method.call(child_record)
+                if children_to_keep.exclude?(key)
+                  delete_method.call(child_record)
+                end
               end
             end
           end
