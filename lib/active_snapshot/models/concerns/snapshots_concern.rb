@@ -31,7 +31,9 @@ module ActiveSnapshot
       if snapshot_children
         snapshot_children.each do |child_group_name, h|
           h[:records].each do |child_item|
-            snapshot_items << snapshot.build_snapshot_item(child_item, child_group_name: child_group_name)
+            if child_item.present?
+              snapshot_items << snapshot.build_snapshot_item(child_item, child_group_name: child_group_name)
+            end
           end
         end
       end
