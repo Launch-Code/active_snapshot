@@ -46,12 +46,14 @@ module ActiveSnapshot
     end
 
     def build_snapshot_item(instance, child_group_name: nil)
-      self.snapshot_items.new({
-        object: instance.attributes,
-        item_id: instance.id,
-        item_type: instance.class.name,
-        child_group_name: child_group_name,
-      })
+      if instance
+        return self.snapshot_items.new({
+          object: instance.attributes,
+          item_id: instance.id,
+          item_type: instance.class.name,
+          child_group_name: child_group_name,
+        })
+      end
     end
 
     def restore!
